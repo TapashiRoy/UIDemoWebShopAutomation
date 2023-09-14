@@ -335,7 +335,7 @@ public class LandingPage {
 
 	public int getCustomerServiceFooterSectionCount() {
 		int customerServiceFooterCount = eleUtil.getTotalElementsCount(customerServiceFooterSection);
-		System.out.println("Footer elements count under Customer Service Column is:" + customerServiceFooterCount);
+		System.out.println("Footer Links count under Customer Service Column is:" + customerServiceFooterCount);
 		return customerServiceFooterCount;
 	}
 
