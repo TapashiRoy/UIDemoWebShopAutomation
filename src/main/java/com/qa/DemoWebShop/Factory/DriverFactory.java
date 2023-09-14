@@ -36,7 +36,7 @@ public class DriverFactory {
 		} else if (browserName.equalsIgnoreCase("Edge")) {
 			tlDriver.set(new EdgeDriver(op.getEdgeOptions()));
 		} else {
-			System.out.println("Browser not specified, Please specify correct browser" + browserName);
+			System.out.println("Browser not specified, Please specify correct browser Name" + browserName);
 		}
 
 		getDriver().manage().deleteAllCookies();
@@ -86,7 +86,7 @@ public class DriverFactory {
 					System.out.println("TCs will run on PROD environment");
 					break;
 				default:
-					System.out.println("Wrong environment is passed, Please pass the wrong environment");
+					System.out.println("Wrong environment is passed, Please pass the correct environment");
 					throw new FrameworkExceptions("WRONG ENVIRONMENT DETAILS PASSED");
 				}
 			}
