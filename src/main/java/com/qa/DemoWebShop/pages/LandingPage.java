@@ -24,7 +24,6 @@ public class LandingPage {
 	// *****--Locator for Welcome Message and logo when we land on Demo Web Shop
 	private By welcomeMessage = By.cssSelector(".topic-html-content-body");
 	private By demoWebShopLogo = By.xpath("//a/img[@alt='Tricentis Demo Web Shop']");
-	private By slider = By.id("nivo-slider");
 	private By prevSlide = By.xpath("//a[normalize-space()='Prev']");
 	private By afterSlide = By.xpath("//a[normalize-space()='Next']");
 
