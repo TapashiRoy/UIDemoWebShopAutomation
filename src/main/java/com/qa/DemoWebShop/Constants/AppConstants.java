@@ -15,7 +15,6 @@ public class AppConstants {
 	public static final String SEARCH_TEXT_VALUE = "Search store";
 	public static final String WELCOME_TEXT_VALUE = "Welcome to the new Tricentis store!" + '\n'
 			+ "Feel free to shop around and explore everything.";
-
 	public static final String USER_REGISTRATION_MESSAGE = "Your registration completed";
 
 	public static final int POPULAR_TAGS_COUNT = 15;
@@ -52,7 +51,7 @@ public class AppConstants {
 	public static final String REGISTER_PAGE_TITLE_VALUE = "Demo Web Shop. Register";
 	public static final String REGISTER_PAGE_URL_FRACTION_VALUE = "register";
 
-	public static final String BOOKS_PAGE_TITLE_VALUE = "Demo Web Shop. Books111";
+	public static final String BOOKS_PAGE_TITLE_VALUE = "Demo Web Shop. Books";
 	public static final String BOOKS_PAGE_URL_FRACTION_VALUE = "books";
 
 	public static final String LOGIN_PAGE_TITLE_VALUE = "Demo Web Shop. Login";
@@ -72,7 +71,6 @@ public class AppConstants {
 	public static final int PAGE_VIEW_LIST_COUNT = 2;
 
 	public static final int FILTER_LINKS_COUNT = 3;
-
 	public static final String PURCHASED_PRODUCT_GRID_HEADER_TITLE = "Customers who bought this item also bought";
 
 	// ********ERROR MESSAGES********************
