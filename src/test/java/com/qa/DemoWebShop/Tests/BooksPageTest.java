@@ -30,7 +30,7 @@ public class BooksPageTest extends BaseClass {
 	@Test
 	public void booksPageHeadersTest() {
 		List<String> headerValues = bPage.verifyBooksPageHeaders();
-		System.out.println(headerValues);
+		System.out.println("The header values are:" + headerValues);
 		Assert.assertEquals(headerValues, AppConstants.PAGE_HEADERS_ACROSS_ALL_PAGES);
 	}
 
