@@ -1,81 +1,108 @@
-pipeline{
+pipeline 
+{
+    agent any
     
-    agent any    
-    stages{        
-        stage("build"){
-            steps{
-                echo("build the project")
-            }
-        }		
-        
-        stage("Run Unit test"){
-            steps{
-                echo("run UTs")
-            }
-        }
-        
-        stage("Run Integration test"){
-            steps{
-                echo("run ITs")
-            }
-        }
-        
-        stage("Deploy to dev"){
-            steps{
-                echo("deploy to dev")
-            }
-        }
-		
-		stage("Deploy to QA"){
-            steps{
-                echo("deploy to QA")
-            }
-        }
-        
-        
-        
-        stage("Run regression Automation test cases on QA"){
-            steps{
-                echo("Run test cases on QA")
-            }
-        }
-        
-        stage("Deploy to stage"){
-            steps{
-                echo("deploy to stage")
-            }
-        }
-        
-         stage("Run sanity test cases on Stage"){
-            steps{
-                echo("Run sanity test cases on Stage")
-            }
+    tools{
+        maven 'maven'
         }
 
-
-        stage("Deploy to UAT"){
-            steps{
-                echo("deploy to UAT")
+    stages 
+    {
+        stage('Build') 
+        {
+            steps
+            {
+                 git 'https://github.com/jglick/simple-maven-project-with-tests.git'
+                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
+            }
+            post 
+            {
+                success
+                {
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                    archiveArtifacts 'target/*.jar'
+                }
             }
         }
         
-         stage("Run sanity test cases on UAT"){
-            steps{
-                echo("Run sanity test cases on UAT")
-            }
-        }
-
-
         
-        stage("Deploy to PROD"){
+        
+        stage("Deploy to QA"){
             steps{
-                echo("deploy to PROD")
+                echo("deploy to qa")
             }
         }
         
+        
+                
+        stage('Regression Automation Tests') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    git 'https://github.com/TapashiRoy/UIDemoWebShopAutomation.git'
+                    sh "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_regression.xml"
+                    
+                }
+            }
+        }
+                
+     
+        stage('Publish Allure Reports') {
+           steps {
+                script {
+                    allure([
+                        includeProperties: false,
+                        jdk: '',
+                        properties: [],
+                        reportBuildPolicy: 'ALWAYS',
+                        results: [[path: '/allure-results']]
+                    ])
+                }
+            }
+        }
+        
+        
+        stage('Publish Extent Report'){
+            steps{
+                     publishHTML([allowMissing: false,
+                                  alwaysLinkToLastBuild: false, 
+                                  keepAll: true, 
+                                  reportDir: 'reports', 
+                                  reportFiles: 'TestExecutionReport.html', 
+                                  reportName: 'HTML Regression Extent Report', 
+                                  reportTitles: ''])
+            }
+        }
+        
+        stage("Deploy to Stage"){
+            steps{
+                echo("deploy to Stage")
+            }
+        }
+        
+        stage('Sanity Automation Test') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    git 'https://github.com/TapashiRoy/UIDemoWebShopAutomation.git'
+                    sh "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_sanity.xml"
+                    
+                }
+            }
+        }
+        
+        
+        
+        stage('Publish sanity Extent Report'){
+            steps{
+                     publishHTML([allowMissing: false,
+                                  alwaysLinkToLastBuild: false, 
+                                  keepAll: true, 
+                                  reportDir: 'reports', 
+                                  reportFiles: 'TestExecutionReport.html', 
+                                  reportName: 'HTML Sanity Extent Report', 
+                                  reportTitles: ''])
+            }
+        }
         
         
     }
-    
-    
 }
