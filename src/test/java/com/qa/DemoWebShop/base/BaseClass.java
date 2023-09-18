@@ -6,6 +6,7 @@ import java.util.Properties;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
 import org.testng.asserts.SoftAssert;
 
 import com.qa.DemoWebShop.Factory.DriverFactory;
@@ -41,10 +42,15 @@ public class BaseClass {
 	 * 
 	 * @throws IOException
 	 */
+	@Parameters({ "browser" })
 	@BeforeTest
-	public void setup() throws IOException {
+	public void setup(String browserName) throws IOException {
 		driverFactor = new DriverFactory();
 		prop = driverFactor.initProperties();
+
+		if (browserName != null) { // It means passing the browser from testng.xml
+			prop.setProperty("browser", browserName);
+		}
 		driver = driverFactor.initDriver(prop);
 		lPage = new LandingPage(driver);
 		softAssert = new SoftAssert();

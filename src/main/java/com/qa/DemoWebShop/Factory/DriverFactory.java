@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 
 import org.aspectj.util.FileUtil;
@@ -12,6 +14,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import com.qa.DemoWebShop.Exceptions.FrameworkExceptions;
 
@@ -31,10 +34,20 @@ public class DriverFactory {
 		op = new OptionsManager(prop);
 		System.out.println("Browser Name is:" + browserName);
 		if (browserName.equalsIgnoreCase("chrome")) {
-			tlDriver.set(new ChromeDriver(op.getChromeOptions()));
-			op.getChromeOptions();
-		} else if (browserName.equalsIgnoreCase("Edge")) {
-			tlDriver.set(new EdgeDriver(op.getEdgeOptions()));
+			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
+				// run at the remote machine/Selenium grid
+				init_remoteDriver("chrome");
+			} else {
+				tlDriver.set(new ChromeDriver(op.getChromeOptions()));
+				op.getChromeOptions();
+			}
+
+		} else if (browserName.equalsIgnoreCase("edge")) {
+			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
+				init_remoteDriver("edge");
+			} else {
+				tlDriver.set(new EdgeDriver(op.getEdgeOptions()));
+			}
 		} else {
 			System.out.println("Browser not specified, Please specify correct browser Name" + browserName);
 		}
@@ -45,10 +58,34 @@ public class DriverFactory {
 		return getDriver();
 	}
 
+	private void init_remoteDriver(String browserName) {
+
+		System.out.println("Running tests on Selenim GRID with browser: " + browserName);
+
+		try {
+			switch (browserName) {
+			case "chrome":
+				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), op.getChromeOptions()));
+				break;
+			case "edge":
+				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), op.getEdgeOptions()));
+				break;
+
+			default:
+				System.out.println("Wrong browser info....can not run on grid remote machine....");
+				break;
+			}
+
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	/*
 	 * It will get the local Thread copy of the driver
 	 */
-	public synchronized static WebDriver getDriver() {
+	public static WebDriver getDriver() {
 		return tlDriver.get();
 	}
 
