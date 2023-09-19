@@ -1,0 +1,29 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="DemoWebShop Regression Suite" verbose="4"  thread-count="2" parallel="tests">
+	
+	<listeners>			
+		<listener
+			class-name="com.qa.DemoWebShop.Listeners.AllureReportListener" />	
+		<listener
+			class-name="com.qa.DemoWebShop.Listeners.ExtentReportListener" />	
+		<listener
+			class-name="com.qa.DemoWebShop.Listeners.AnnotationTransformer" />			
+	</listeners>
+	
+	<test name="Login Page Test_chrome_114.0">	
+		<parameter name="browser" value="chrome" />	
+		<parameter name="browserversion" value="114.0" />	
+		<classes>
+			<class name="com.qa.DemoWebShop.Tests.LoginPageTest" />
+		</classes>
+	</test>
+	
+	<test name="Books Page Test_chrome_114.0">	
+		<parameter name="browser" value="chrome" />	
+		<parameter name="browserversion" value="114.0" />			
+		<classes>
+			<class name="com.qa.DemoWebShop.Tests.BooksPageTest" />
+		</classes>
+	</test>
+	
+</suite>

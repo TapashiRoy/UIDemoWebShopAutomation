@@ -42,14 +42,15 @@ public class BaseClass {
 	 * 
 	 * @throws IOException
 	 */
-	@Parameters({ "browser" })
+	@Parameters({ "browser", "browserversion" })
 	@BeforeTest
-	public void setup(String browserName) throws IOException {
+	public void setup(String browserName, String browserversion) throws IOException {
 		driverFactor = new DriverFactory();
 		prop = driverFactor.initProperties();
 
 		if (browserName != null) { // It means passing the browser from testng.xml
 			prop.setProperty("browser", browserName);
+			prop.setProperty("browserversion", browserversion);
 		}
 		driver = driverFactor.initDriver(prop);
 		lPage = new LandingPage(driver);

@@ -10,15 +10,17 @@
 			class-name="com.qa.DemoWebShop.Listeners.AnnotationTransformer" />			
 	</listeners>
 	
-	<test name="Login Page Test_chrome">	
+	<test name="Login Page Test_chrome_117.0">	
 		<parameter name="browser" value="chrome" />	
+		<parameter name="browserversion" value="117.0" />	
 		<classes>
 			<class name="com.qa.DemoWebShop.Tests.LoginPageTest" />
 		</classes>
 	</test>
 	
-	<test name="Books Page Test_Edge">	
-		<parameter name="browser" value="edge" />			
+	<test name="Books Page Test_Edge_114.0">	
+		<parameter name="browser" value="edge" />	
+		<parameter name="browserversion" value="117.0" />			
 		<classes>
 			<class name="com.qa.DemoWebShop.Tests.BooksPageTest" />
 		</classes>
