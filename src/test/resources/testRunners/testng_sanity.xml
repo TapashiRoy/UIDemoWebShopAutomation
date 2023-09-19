@@ -10,7 +10,9 @@
 			class-name="com.qa.DemoWebShop.Listeners.AnnotationTransformer" />			
 	</listeners>
 	
-	<test name="Login Page Test">		
+	<test name="Login Page Test">	
+		<parameter name="browser" value="chrome" />	
+		<parameter name="browserversion" value="114.0" />	
 		<classes>
 			<class name="com.qa.DemoWebShop.Tests.LoginPageTest" />
 		</classes>
